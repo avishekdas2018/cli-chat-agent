@@ -1,8 +1,11 @@
 import "dotenv/config"
 
 import { Groq } from 'groq-sdk';
+import { tavily } from '@tavily/core';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
+const tavilyInstance = tavily({ apiKey: process.env.TAVILY_API_KEY })
+
 
 async function main() {
   const completion = await groq.chat.completions.create({
@@ -15,7 +18,6 @@ async function main() {
           "name": "searchWeb",
           "description": "Search the internet and find latest infomations and real-time data",
           "parameters": {
-            // JSON Schema object
             "type": "object",
             "properties": {
               "query": {
@@ -28,6 +30,7 @@ async function main() {
         }
       }
     ],
+
     messages: [
       {
         role: "system",
@@ -76,5 +79,12 @@ main()
 async function searchWeb({ query }: { query: string }) {
   console.log("Call searchWeb...");
 
+  const response = await tavilyInstance.search(query)
+  console.log(response);
+
+  const finalResult = response.results.map((result) => result.content).join("/n/n")
+  console.log(finalResult);
+
   return "iPhone was launched in 2024"
 }
+
