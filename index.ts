@@ -9,23 +9,34 @@ const tavilyInstance = tavily({ apiKey: process.env.TAVILY_API_KEY })
 
 
 async function main() {
-
+  const readLineInterface = readline.createInterface({ input: process.stdin, output: process.stdout })
   const messages = [
     {
       role: "system",
       content: `You are very helpfull personal assistant. You always answer asked questions.
         You have access following tools:
-        1. searchWeb({ query }: { query: string}) // Search the internet and find latest infomations and real-time data`
+        1. searchWeb({ query }: { query: string}) // Search the internet and find latest infomations and real-time data
+        Current date and time: ${new Date().toUTCString()}`
     },
 
-    {
-      role: "user",
-      content: "What is current weather in Kolkata?"
-    }
+    // {
+    //   role: "user",
+    //   content: "What is current weather in Kolkata?"
+    // }
   ]
 
 
   while (true) {
+    const question = await readLineInterface.question('You: ')
+    messages.push({
+      role: "user",
+      content: question
+    })
+
+    if (question === "bye") {
+      break;
+    }
+
     while (true) {
       const completion = await groq.chat.completions.create({
         model: "openai/gpt-oss-20b",
@@ -85,13 +96,14 @@ async function main() {
       }
     }
   }
+  readLineInterface.close()
 }
 
 main()
 
 
 async function searchWeb({ query }: { query: string }) {
-  console.log("Call searchWeb...");
+  console.log("Wait! I am searching the web...");
 
   const response = await tavilyInstance.search(query)
   // console.log(response);
