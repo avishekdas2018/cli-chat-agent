@@ -9,12 +9,12 @@
 </head>
 
 <body class="bg-black text-white overflow-x-hidden">
-  <div class="container mx-auto max-w-5xl pb-60">
+  <div class="container mx-auto max-w-5xl pb-60 px-2" id="chat-container">
 
     <!-- User message -->
-    <div class="my-6 bg-[#2B2B2B] p-3 rounded-full ml-auto max-w-fit">
+    <!-- <div class="my-6 bg-[#2B2B2B] p-3 rounded-full ml-auto max-w-fit">
       <h1>Hi, how are you?</h1>
-    </div>
+    </div> -->
 
     <!-- Assistant message -->
     <div class="max-w-fit p-2">
@@ -22,15 +22,15 @@
     </div>
 
     <!-- Buttom textarea -->
-    <div class="fixed inset-x-0 bottom-0 flex items-center justify-center bg-black">
+    <div class="fixed inset-x-0 bottom-0 flex items-center justify-center bg-black px-2">
       <div class="bg-[#212121] p-2 rounded-xl w-full max-w-5xl mb-5">
         <textarea class="w-full resize-none outline-0 p-3" rows="2" name="" id="input"></textarea>
         <div class="flex justify-end items-center">
-          <button class="bg-white px-4 py-1 text-black rounded-full cursor-pointer hover:bg-gray-300">Send</button>
+          <button id="send"
+            class="bg-white px-4 py-1 text-black rounded-full cursor-pointer hover:bg-gray-300">Send</button>
         </div>
       </div>
     </div>
-
   </div>
 
 
